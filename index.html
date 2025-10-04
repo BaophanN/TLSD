@@ -63,7 +63,7 @@ with Graph Knowledge and Distance Awareness</h1>
                   <span class="author-block">
                   Tri Huynh,
                   <span class="author-block">
-                  Dung Dung Nguyen
+                  Duc Dung Nguyen
                   </span>
                   </div>
 
@@ -125,9 +125,7 @@ with Graph Knowledge and Distance Awareness</h1>
   <div class="container is-max-desktop">
     <div class="hero-body" style="display: flex; flex-direction: column; align-items: center;">
       <div style="width: 1280px; height: 720px;">
-        <iframe width="100%" height="100%"
-          src="https://www.youtube.com/embed/WWwOK5cppdI?autoplay=1&mute=1&loop=1&playlist=WWwOK5cppdI"
-          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/WWwOK5cppdI?si=bQuVnPi35AXrjTbd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
         Qualitative Results on OpenLane-V2 validation set.
@@ -158,115 +156,155 @@ with Graph Knowledge and Distance Awareness</h1>
 </section>
 <!-- End paper abstract -->
 
-<!-- Method --> 
+<!-- Contribution -->
+<!-- ========== METHOD ========== -->
+<section id="method" class="hero is-small anchor">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-10">
+          <img class="thumb" src="static/images/overall_framework.jpg" alt="Overview of the TLSD framework"/>
+          <p class="is-caption" style="margin-top:.75rem;">
+            <strong>Overview of the TLSD framework.</strong> Multi-view images are processed by a 2D backbone, converted into
+            a bird’s-eye view (BEV) with BEVFormer, and decoded with a transformer. TLSD enhances this pipeline using grouped
+            queries, iterative topology refinement, graph-based reasoning, and a distance-aware post-processing step.
+          </p>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <div class="content">
+            <h3 class="title is-4">Problem Formulation</h3>
+            <p>
+              The goal is to detect all lane segments from multi-view cameras and establish how they connect to each other
+              in a directed graph representation.
+            </p>
+
+            <h3 class="title is-4">Group-wise One-to-Many Assignment</h3>
+            <div class="has-text-centered" style="margin:1rem 0;">
+              <img class="thumb" 
+                   src="static/images/group_query.jpg" 
+                   alt="Group-wise One-to-Many Assignment"
+                   style="width:70%; max-width:700px;"/>
+                   <!-- <p class="is-caption"><strong>Group-wise One-to-Many Assignment.</strong> Partitioning queries into groups increases positive supervision while keeping the model efficient.</p> -->
+            </div>
+            <p>
+              Queries are divided into groups so that each group covers multiple matches. This increases supervision,
+              stabilizes training, and speeds up convergence without adding extra decoder complexity.
+            </p>
+            
+
+            <h3 class="title is-4">Topology Iterative Refinement</h3>
+            <p>
+              The connectivity between lane segments is refined layer by layer in the decoder, ensuring early predictions
+              are topology-aware and later layers polish the details.
+            </p>
+
+            <h3 class="title is-4">Graph Reasoning on Lane Coordinates</h3>
+            <p>
+              Lane coordinates are processed with a graph neural network that exchanges information among neighboring segments.
+              This adds spatial priors and improves the accuracy of connectivity predictions.
+            </p>
+
+            <h3 class="title is-4">Distance-Aware Post-Processing (DAPP)</h3>
+            <div class="has-text-centered" style="margin:1rem 0;">
+              <img class="thumb" 
+                   src="static/images/topohead.jpg" 
+                   alt="DAPP"
+                   style="width:70%; max-width:1000px;"
+                   />
+              <!-- <p class="is-caption"><strong>Comparison between our and other topological head.</strong> Our architecture takes into
+              consideration the geometric information during both training and inference processes. -->
+              </p>
+            </div>            
+            <p>
+              Finally, a distance-based adjustment is applied to connectivity scores during inference, balancing precision
+              and stability in the final output.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- End Contribution -->
+
+
 <section class="hero is-small">
   <div class="hero-body">
     <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Method</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="item">
-          <!-- Your image here -->
-          <img src="static/images/overall_framework.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-              <b>Overview of the TLSD framework</b>. TLSD follows a widely adopted three-stage
-              architecture. First, the surrounding multi-view images are processed by a 2D feature
-              extractor to generate multi-scale features. These features are then transformed into
-              bird’s-eye view (BEV) representations using BEVFormer. Finally, a transformer-based
-              decoder predicts 3D lane segment coordinates along with a connectivity matrix. To
-              improve convergence and expressiveness, TLSD introduces multiple groups of learnable
-              queries and leverages a graph neural network to capture high-level relational information
-              among potentially connected segments.
-          </h2>
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <div class="content">
+            
+            <!-- Main heading (centered) -->
+            <h2 class="title is-2 has-text-centered">Evaluation</h2>
+
+            <!-- Subsection: Centerline Perception -->
+            <h3 class="title is-4 has-text-left">Centerline Perception</h3>
+            <div class="has-text-centered" style="margin:1rem 0;">
+              <img src="static/images/centerline_table.jpg" alt="Centerline Perception Results"/>
+            </div>
+            <p class="has-text-left">
+              <strong>Evaluation on lane centerline perception using the OpenLane-V2 benchmark.</strong>
+              Metrics marked with * are extracted from the official TOP_ll v1.0.0 results reported in prior work.
+              The derived metric OLS∗ reflects a composite of DETl and TOP_ll. TLSD demonstrates state-of-the-art
+              performance across training schedules, with our ResNet-18 variant achieving highly competitive
+              results against deeper architectures.
+            </p>
+
+            <!-- Subsection: Lane Segment Perception -->
+            <h3 class="title is-4 has-text-left">Lane Segment Perception</h3>
+            <div class="has-text-centered" style="margin:1rem 0;">
+              <img src="static/images/lanesegment_table.jpg" alt="Lane Segment Perception Results"/>
+            </div>
+            <p class="has-text-left">
+              <strong>Quantitative comparison on the OpenLane-V2 benchmark for lane segment perception.</strong>
+              TLSD achieves state-of-the-art performance at both 24 and 48 training epochs. Notably, our lightweight
+              ResNet-18 model competes closely with heavier ResNet-50 backbones, demonstrating strong
+              efficiency-accuracy tradeoffs.
+            </p>
+
+            <!-- Subsection: Qualitative Results -->
+            <h3 class="title is-4 has-text-left">Qualitative Results</h3>
+            <div class="has-text-centered" style="margin:1rem 0;">
+              <img src="static/images/ver4_concat_final_concat_etlsd_10036.jpg" alt="Qualitative Results"/>
+            </div>
+            <p class="has-text-left">
+              <strong>Qualitative examples comparing TLSD with prior approaches.</strong> These visualizations
+              highlight TLSD’s superior ability to capture long-range dependencies and preserve lane connectivity.
+            </p>
+
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- End Method -->
 
-
-
-<!-- Quantitative Results centerline perception -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Centerline Perception</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="item">
-          <!-- Your image here -->
-          <img src="static/images/lanesegment_table.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-        <div class="item">
-          <!-- Your image here -->
-          <img src="static/images/centerline_table.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-            Evaluation on lane centerline perception using the OpenLane-V2 benchmark.
-            Metrics marked with * are extracted from the official TOP_ll v1.0.0 results reported in prior work. The
-            derived metric OLS∗ reflects a composite of DETl and TOP_ll. TLSD again demonstrates state-of-the-
-            art performance across training schedules, with our ResNet-18 variant achieving highly competitive
-            results against deeper architectures.
-          </h2>
-        </div>
-          </h2>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- End Centerline -->
-
-<!-- Quantitative Results lane segment perception -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Lane Segment Perception</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="item">
-          <!-- Your image here -->
-          <img src="static/images/lanesegment_table.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-            Quantitative comparison on the OpenLane-V2 benchmark for lane segment
-            perception. TLSD achieves state-of-the-art performance at both 24 and 48 training epochs. Notably, our lightweight model based on ResNet-18 competes closely with heavier ResNet-50 backbones,
-            demonstrating strong efficiency-accuracy tradeoffs.
-          </h2>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Lane Segment -->
-<!-- Image carousel -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/ver4_concat_final_concat_etlsd_10036.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          Qualitative Results of TLSD on the OpenLane-V2 dataset.
-        </h2>
-      </div>
-
-
-  </div>
-</div>
-</div>
-</section>
 <!-- End image carousel -->
 
 <!--BibTex citation -->
-  <!-- <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>BibTex Code Here</code></pre>
-    </div>
-</section> -->
+      <pre><code>@inproceedings{tlsd2025,
+    title     = {TLSD: Breaking the Limit of Topological Lane Mapping
+with Graph Knowledge and Distance Awareness},
+    author    = {Anh Nguyen, Bao Phan, Tri Huynh and Duc Dung Nguyen},
+    booktitle = {Proceedings of the Asian Conference on Machine Learning (ACML)},
+    year      = {2025},
+    pages     = {xx--yy},
+    publisher = {PMLR}
+    }</code></pre>
+  </div>
+</section>
+
 <!--End BibTex citation -->
 
 
