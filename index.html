@@ -24,7 +24,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <title>eTLSD</title>
+  <title>TLSD</title>
   <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
   rel="stylesheet">
@@ -52,7 +52,8 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">eTLSD: An Efficient Topological Lane Segment Detector with GNN and Distance Awareness</h1>
+            <h1 class="title is-1 publication-title">TLSD: Breaking the Limit of Topological Lane Mapping
+with Graph Knowledge and Distance Awareness</h1>
             <div class="is-size-5 publication-authors">
               <!-- Paper authors -->
               <span class="author-block">
@@ -156,6 +157,35 @@
   </div>
 </section>
 <!-- End paper abstract -->
+
+<!-- Method --> 
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <!-- Paper video. -->
+      <h2 class="title is-3">Method</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="item">
+          <!-- Your image here -->
+          <img src="static/images/overall_framework.jpg" alt="MY ALT TEXT"/>
+          <h2 class="subtitle has-text-centered">
+              <b>Overview of the TLSD framework</b>. TLSD follows a widely adopted three-stage
+              architecture. First, the surrounding multi-view images are processed by a 2D feature
+              extractor to generate multi-scale features. These features are then transformed into
+              bird’s-eye view (BEV) representations using BEVFormer. Finally, a transformer-based
+              decoder predicts 3D lane segment coordinates along with a connectivity matrix. To
+              improve convergence and expressiveness, TLSD introduces multiple groups of learnable
+              queries and leverages a graph neural network to capture high-level relational information
+              among potentially connected segments.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Method -->
+
+
 
 <!-- Quantitative Results centerline perception -->
 <section class="hero is-small">
