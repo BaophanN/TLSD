@@ -147,7 +147,7 @@ with Graph Knowledge and Distance Awareness</h1>
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
+        <h2 class="title is-2">Abstract</h2>
         <div class="content has-text-justified">
           <p>
             High-Definition Maps (HD Maps) are essential for both Advanced Driver-Assistance Systems (ADAS) and autonomous vehicles. Offline HD map construction is costly and difficult to maintain due to the dynamic nature of real-world driving environments. Consequently, online HD map generation using onboard sensors has become a focus of the autonomous driving community. However, current deep learning-based methods often rely on computationally intensive feature extractors, hindering their practical deployment. In this paper, we propose eTLSD, an efficient end-to-end neural network that generates rich HD maps containing both topological and geometric road information. To achieve this efficiency and improved performance, we introduce four key innovations: (1) an iterative refinement scheme within the decoder; (2) a group-wise one-to-many assignment strategy for faster convergence of the map learning network; (3) a novel module incorporating lane segment coordinates using a graph neural network; and (4) a distance-aware topological reasoning post-processing method to enhance the quality of connectivity outputs. Evaluations on the OpenLane-V2 dataset demonstrate that eTLSD achieves an average OLUS performance improvement of 6.7% (6.4% on mAP and 14.5% on TOP_lsls metric) compared to existing methods while utilizing a significantly lighter ResNet-18 backbone instead of the commonly employed ResNet-50. This enhanced performance with a smaller model facilitates easier deployment.
@@ -164,8 +164,7 @@ with Graph Knowledge and Distance Awareness</h1>
 <section id="method" class="hero is-small anchor">
   <div class="hero-body">
     <div class="container">
-      <h2 class="title is-3 has-text-centered">Method</h2>
-
+      <h2 class="title is-2 has-text-centered">Method</h2>
       <div class="columns is-centered has-text-centered">
         <div class="column is-10">
           <img class="thumb" src="static/images/overall_framework.jpg" alt="Overview of the TLSD framework"/>
